@@ -8,6 +8,8 @@
 
 - [52pojie每日签到](https://github.com/mengshouer/CheckinBox/tree/master/Checkin52pj)
 
+- [网易云音乐每日签到与刷歌单](https://github.com/mengshouer/CheckinBox/tree/master/NetEase_Music_daily)
+
 
 ### Github Actions版本<br>
 1.点击项目右上角的Fork，Fork此项目<br>
@@ -23,5 +25,6 @@
 value内输入：1.登录手机号 2.登录密码 3.Server酱推送SCKEY,报错提醒<br>
 5.层配置，添加层，选择刚才新建的层。最后点完成<br>
 6.进入函数→触发管理→新建触发器，按自己需求定时启动<br>
+7.自己酌情修改函数的内存与执行超时时间以及其他参数<br>
 
 ### 一切提醒都是报错提醒，没问题不提醒
