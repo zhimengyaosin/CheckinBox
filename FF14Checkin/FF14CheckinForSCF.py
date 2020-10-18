@@ -24,6 +24,7 @@ login_password = os.environ.get("fflogin_password")
 area_name = os.environ.get("area_name")
 server_name = os.environ.get("server_name")
 role_name = os.environ.get("role_name")
+SCKEY = os.environ.get('SCKEY')
 global cookie
 cookie = {}
 
