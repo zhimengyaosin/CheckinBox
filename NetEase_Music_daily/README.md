@@ -1,4 +1,4 @@
-# Cloud189Checkin
+# NetEase_Music_daily
 网易云音乐每日签到与刷歌单，为兼容SCF改自[此项目](https://github.com/t00t00-crypto/wyy-action)<br>
 ##使用方法<br>
 本地环境运行<br>
