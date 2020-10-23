@@ -133,4 +133,5 @@ def main(*args):
 
 
 if __name__ == "__main__":
-    main()
+    if netease_username and netease_password:
+        main()
