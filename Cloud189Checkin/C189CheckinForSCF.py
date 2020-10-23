@@ -3,20 +3,17 @@ from urllib import parse
 
 username = os.environ.get('username')
 password = os.environ.get('password')
+SCKEY = os.environ.get('SCKEY')
+#推送url
+scurl = f"https://sc.ftqq.com/{SCKEY}.send"
 
 def C189Checkin(*args):
     try:
-        try:
-            SCKEY = os.environ.get('SCKEY')
-        except:
-            SCKEY = ""
         s = login(username, password)
         if(s == "error"):
             return None
         else:
             pass
-        #推送url
-        scurl = f"https://sc.ftqq.com/{SCKEY}.send"
         rand = str(round(time.time()*1000))
         surl = f'https://api.cloud.189.cn/mkt/userSign.action?rand={rand}&clientType=TELEANDROID&version=8.6.3&model=SM-G930K'
         url = f'https://m.cloud.189.cn/v2/drawPrizeMarketDetails.action?taskId=TASK_SIGNIN&activityId=ACT_SIGNIN'
@@ -34,12 +31,7 @@ def C189Checkin(*args):
             print(f"未签到，签到获得{netdiskBonus}M空间")
         else:
             print(f"已经签到过了，签到获得{netdiskBonus}M空间")
-        headers = {
-            'User-Agent':'Mozilla/5.0 (Linux; Android 5.1.1; SM-G930K Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.136 Mobile Safari/537.36 Ecloud/8.6.3 Android/22 clientId/355325117317828 clientModel/SM-G930K imsi/460071114317824 clientChannelId/qq proVersion/1.0.6',
-            "Referer" : "https://m.cloud.189.cn/zhuanti/2016/sign/index.jsp?albumBackupOpened=1",
-            "Host" : "m.cloud.189.cn",
-            "Accept-Encoding" : "gzip, deflate",
-        }
+
         #第一次抽奖
         response = s.get(url,headers=headers)
         if ("errorCode" in response.text):
@@ -56,6 +48,7 @@ def C189Checkin(*args):
         else:
             description = response.json()['description']
             print(f"抽奖获得{description}")
+
         #第二次抽奖
         response = s.get(url2,headers=headers)
         if ("errorCode" in response.text):
@@ -72,8 +65,14 @@ def C189Checkin(*args):
         else:
             description = response.json()['description']
             print(f"抽奖获得{description}")
-    except:
-        print("天翼云签到出错")
+    except Exception as e:
+        print("天翼云签到出错：", repr(e))
+        if(SCKEY != ""):
+            data = {
+                "text" : "天翼云签到出错",
+                "desp" : repr(e)
+                }
+            sc = requests.post(scurl, data=data)
 
 BI_RM = list("0123456789abcdefghijklmnopqrstuvwxyz")
 def int2char(a):
