@@ -9,9 +9,10 @@ scurl = f"https://sc.ftqq.com/{SCKEY}.send"
 
 def C189Checkin(*args):
     try:
+        msg = ""
         s = login(username, password)
         if(s == "error"):
-            return None
+            return "天翼云盘登录出错"
         else:
             pass
         rand = str(round(time.time()*1000))
@@ -29,33 +30,40 @@ def C189Checkin(*args):
         netdiskBonus = response.json()['netdiskBonus']
         if(response.json()['isSign'] == "false"):
             print(f"未签到，签到获得{netdiskBonus}M空间")
+            msg += f"未签到，签到获得{netdiskBonus}M空间\n"
         else:
             print(f"已经签到过了，签到获得{netdiskBonus}M空间")
+            msg += f"已经签到过了，签到获得{netdiskBonus}M空间\n"
 
         #第一次抽奖
         response = s.get(url,headers=headers)
         if ("errorCode" in response.text):
             if(response.json()['errorCode'] == "User_Not_Chance"):
                 print("抽奖次数不足")
+                msg += "抽奖次数不足\n"
             else:
                 print(response.text)
+                msg += "第一次抽奖出错\n"
                 if(SCKEY != ""):
                     data = {
-                        "text" : "抽奖出错",
+                        "text" : "第一次抽奖出错",
                         "desp" : response.text
                         }
                     sc = requests.post(scurl, data=data)
         else:
             description = response.json()['description']
             print(f"抽奖获得{description}")
+            msg += f"抽奖获得{description}\n"
 
         #第二次抽奖
         response = s.get(url2,headers=headers)
         if ("errorCode" in response.text):
             if(response.json()['errorCode'] == "User_Not_Chance"):
                 print("抽奖次数不足")
+                msg += "抽奖次数不足\n"
             else:
                 print(response.text)
+                msg += "第二次抽奖出错\n"
                 if(SCKEY != ""):
                     data = {
                         "text" : "第二次抽奖出错",
@@ -65,6 +73,7 @@ def C189Checkin(*args):
         else:
             description = response.json()['description']
             print(f"抽奖获得{description}")
+            msg += f"抽奖获得{description}\n"
     except Exception as e:
         print("天翼云签到出错：", repr(e))
         if(SCKEY != ""):
@@ -73,6 +82,8 @@ def C189Checkin(*args):
                 "desp" : repr(e)
                 }
             sc = requests.post(scurl, data=data)
+        msg += "天翼云签到出错："+repr(e)
+    return msg
 
 BI_RM = list("0123456789abcdefghijklmnopqrstuvwxyz")
 def int2char(a):
@@ -167,4 +178,6 @@ def login(username, password):
 
 if __name__ == "__main__":
     if username and password:
+        print("----------天翼云盘开始尝试签到----------")
         C189Checkin()
+        print("----------天翼云盘签到执行完毕----------")

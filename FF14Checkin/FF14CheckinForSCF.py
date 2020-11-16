@@ -73,7 +73,7 @@ def step1() -> str:
                 "desp" : "登录失败, 短期内登录失败次数过多, 服务器已开启验证码, 请在1-3天后再试..."
                 }
             requests.post(scurl, data=data)
-        return ""
+        return None
 
 # 设置cookie
 def step2():
@@ -150,7 +150,7 @@ def step5() -> str:
             "desp" : "获取角色列表失败..."
             }
         requests.post(scurl, data=data)
-    return ""
+    return None
 
 # 选择区服及角色
 def step6(role: str):
@@ -192,6 +192,8 @@ def step7():
             "desp" : "签到失败..."
             }
         requests.post(scurl, data=data)
+        return False
+    return True
 
 # 查询当前积分
 def step8():
@@ -205,23 +207,30 @@ def step8():
     attach = obj["Attach"]
     jifen = json.loads(attach)["Jifen"]
     print("当前积分为: %d" % jifen)
+    return jifen
 
 def go(*arg):
     ticket = step1()
-    if ticket == "":
-        return
+    if not ticket:
+        return "登录失败, 短期内登录失败次数过多, 服务器已开启验证码, 请在1-3天后再试..."
     step2()
     step3()
     step4(ticket)
     role = step5()
-    if role == "":
-        return
+    if not role:
+        return "获取角色列表失败..."
     step6(role)
-    step7()
-    step8()
-    time.sleep(5)
+    r = step7()
+    if r:
+        jifen = step8()
+        jifen = f"当前积分为:{jifen}"
+        return jifen
+    else:
+        return "签到失败..."
 
 if __name__ == "__main__":
     if login_name and login_password and area_name and server_name and role_name:
+        print("----------FF14积分商城开始尝试签到----------")
         go()
+        print("----------FF14积分商城签到执行完毕----------")
 

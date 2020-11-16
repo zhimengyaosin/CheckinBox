@@ -6,6 +6,7 @@ cookie = os.environ.get('cookie_52pj')
 
 def pjCheckin(*args):
     try:
+        msg = ""
         SCKEY = os.environ.get('SCKEY')
         s = requests.Session()
         headers={
@@ -27,15 +28,21 @@ def pjCheckin(*args):
                         }
                 requests.post(scurl, data=data)
             print("cookie_52pj失效，需重新获取")
+            msg += "cookie_52pj失效，需重新获取"
         elif "恭喜"  in c:
             print("52pj签到成功")
+            msg += "52pj签到成功"
         else:
             print(c)
     except:
         print(b)
         print("52pj出错")
+        msg += "52pj出错"
+    return msg
         
 
 if __name__ == "__main__":
     if cookie:
+        print("----------52pojie开始尝试签到----------")
         pjCheckin()
+        print("----------52pojie签到执行完毕----------")
