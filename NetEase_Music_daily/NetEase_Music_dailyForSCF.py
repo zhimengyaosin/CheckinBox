@@ -1,3 +1,5 @@
+# -*- coding: utf8 -*-
+
 import requests, base64, json, hashlib, os
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
@@ -61,7 +63,7 @@ def main(*args):
         object=json.loads(res.text)
         if object['code']==200:
             print("登录成功！")
-            msg += "登录成功！\n"
+            msg += "登录成功！,"
         else:
             print("登录失败！请检查密码是否正确！"+str(object['code']))
             return "登录失败！请检查密码是否正确！"
@@ -70,7 +72,7 @@ def main(*args):
         object=json.loads(res.text)
         if object['code']!=200 and object['code']!=-2:
             print("签到时发生错误："+object['msg'])
-            msg += "签到时发生错误\n"
+            msg += "签到时发生错误,"
             if SCKEY:
                 scurl = f"https://sc.ftqq.com/{SCKEY}.send"
                 data = {
@@ -81,10 +83,10 @@ def main(*args):
         else:
             if object['code']==200:
                 print("签到成功，经验+"+str(object['point']))
-                msg += "签到成功\n"
+                msg += "签到成功,"
             else:
                 print("重复签到")
-                msg += "重复签到\n"
+                msg += "重复签到,"
 
 
         res=s.post(url=url3,data=protect('{"csrf_token":"'+requests.utils.dict_from_cookiejar(tempcookie)['__csrf']+'"}'),headers=headers)

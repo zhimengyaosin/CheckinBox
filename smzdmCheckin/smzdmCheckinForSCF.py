@@ -1,4 +1,5 @@
 # -*- coding: utf8 -*-
+
 import requests, json, time, os
 
 requests.packages.urllib3.disable_warnings()
@@ -20,7 +21,7 @@ def smzdm_pc(*arg):
             }
 
         r = s.get(url, headers=headers, verify=False)
-        print(r.text)
+        print(r.text.encode('latin-1').decode('unicode_escape'))
         if r.json()["error_code"] != 0 and SCKEY:
             scurl = f"https://sc.ftqq.com/{SCKEY}.send"
             data = {

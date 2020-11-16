@@ -1,3 +1,5 @@
+# -*- coding: utf8 -*-
+
 import requests, time, re, rsa, json, base64, os
 from urllib import parse
 
@@ -26,24 +28,24 @@ def C189Checkin(*args):
             "Accept-Encoding" : "gzip, deflate",
         }
         #签到
-        response = s.get(surl,headers=headers)
+        response = s.get(surl,headers=headers,timeout=20)
         netdiskBonus = response.json()['netdiskBonus']
         if(response.json()['isSign'] == "false"):
-            print(f"未签到，签到获得{netdiskBonus}M空间")
-            msg += f"未签到，签到获得{netdiskBonus}M空间\n"
+            print(f"未签到，签到获得  {netdiskBonus}  M空间")
+            msg += f"未签到，签到获得  {netdiskBonus}  M空间\n"
         else:
-            print(f"已经签到过了，签到获得{netdiskBonus}M空间")
-            msg += f"已经签到过了，签到获得{netdiskBonus}M空间\n"
+            print(f"已经签到过了，签到获得  {netdiskBonus}  M空间")
+            msg += f"已经签到过了，签到获得  {netdiskBonus}  M空间,"
 
         #第一次抽奖
-        response = s.get(url,headers=headers)
+        response = s.get(url,headers=headers,timeout=20)
         if ("errorCode" in response.text):
             if(response.json()['errorCode'] == "User_Not_Chance"):
                 print("抽奖次数不足")
-                msg += "抽奖次数不足\n"
+                msg += "抽奖次数不足,"
             else:
                 print(response.text)
-                msg += "第一次抽奖出错\n"
+                msg += "第一次抽奖出错,"
                 if(SCKEY != ""):
                     data = {
                         "text" : "第一次抽奖出错",
@@ -52,18 +54,18 @@ def C189Checkin(*args):
                     sc = requests.post(scurl, data=data)
         else:
             description = response.json()['description']
-            print(f"抽奖获得{description}")
-            msg += f"抽奖获得{description}\n"
+            print(f"抽奖获得  {description}  ")
+            msg += f"抽奖获得  {description}  ,"
 
         #第二次抽奖
-        response = s.get(url2,headers=headers)
+        response = s.get(url2,headers=headers,timeout=20)
         if ("errorCode" in response.text):
             if(response.json()['errorCode'] == "User_Not_Chance"):
                 print("抽奖次数不足")
-                msg += "抽奖次数不足\n"
+                msg += "抽奖次数不足,"
             else:
                 print(response.text)
-                msg += "第二次抽奖出错\n"
+                msg += "第二次抽奖出错,"
                 if(SCKEY != ""):
                     data = {
                         "text" : "第二次抽奖出错",
@@ -72,8 +74,8 @@ def C189Checkin(*args):
                     sc = requests.post(scurl, data=data)
         else:
             description = response.json()['description']
-            print(f"抽奖获得{description}")
-            msg += f"抽奖获得{description}\n"
+            print(f"抽奖获得  {description}  ")
+            msg += f"抽奖获得  {description}  ,"
     except Exception as e:
         print("天翼云签到出错：", repr(e))
         if(SCKEY != ""):

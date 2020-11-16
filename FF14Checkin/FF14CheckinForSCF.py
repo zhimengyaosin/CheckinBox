@@ -1,3 +1,5 @@
+# -*- coding: utf8 -*-
+
 import json
 import time
 import os
@@ -223,7 +225,7 @@ def go(*arg):
     r = step7()
     if r:
         jifen = step8()
-        jifen = f"当前积分为:{jifen}"
+        jifen = f"当前积分为: {jifen} "
         return jifen
     else:
         return "签到失败..."
