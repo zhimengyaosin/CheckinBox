@@ -6,7 +6,7 @@ requests.packages.urllib3.disable_warnings()
 
 cookie = os.environ.get("cookie_smzdm")
 
-def smzdm_pc(*arg):
+def main(*arg):
     try:
         msg = ""
         SCKEY = os.environ.get('SCKEY')
@@ -36,6 +36,18 @@ def smzdm_pc(*arg):
     except Exception as e:
         print('repr(e):', repr(e))
         msg += '运行出错,repr(e):'+repr(e)
+    return msg + "\n"
+
+def smzdm_pc(*arg):
+    msg = ""
+    global cookie
+    clist = cookie.split("\n")
+    i = 0
+    while i < len(clist):
+        msg += f"第 {i+1} 个账号开始执行任务\n"
+        cookie = clist[i]
+        msg += main(cookie)
+        i += 1
     return msg
 
 if __name__ == "__main__":

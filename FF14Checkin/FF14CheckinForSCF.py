@@ -211,7 +211,7 @@ def step8():
     print("当前积分为: %d" % jifen)
     return jifen
 
-def go(*arg):
+def main(*arg):
     ticket = step1()
     if not ticket:
         return "登录失败, 短期内登录失败次数过多, 服务器已开启验证码, 请在1-3天后再试..."
@@ -229,6 +229,31 @@ def go(*arg):
         return jifen
     else:
         return "签到失败..."
+
+def go(*arg):
+    msg = ""
+    global login_name, login_password, area_name, server_name, role_name
+    nlist = login_name.split("\n")
+    plist = login_password.split("\n")
+    alist = area_name.split("\n")
+    slist = server_name.split("\n")
+    rlist = role_name.split("\n")
+    if len(nlist) == len(plist) == len(alist) == len(slist) == len(rlist):
+        i = 0
+        while i < len(nlist):
+            msg += f"\n第 {i+1} 个账号开始执行任务\n"
+            login_name = nlist[i]
+            login_password = plist[i]
+            area_name = alist[i]
+            server_name = slist[i]
+            role_name = rlist[i]
+            msg += main()
+            i += 1
+    else:
+        msg = "账号密码或其他参数个数不相符"
+        print(msg)
+    return msg
+
 
 if __name__ == "__main__":
     if login_name and login_password and area_name and server_name and role_name:

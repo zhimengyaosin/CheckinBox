@@ -88,4 +88,7 @@ def main(*args):
             print("未设置账号密码")
 
 if __name__ == '__main__':
-    main()
+    if note_username and note_password:
+        print("----------有道云笔记开始尝试签到----------")
+        main()
+        print("----------有道云笔记签到执行完毕----------")

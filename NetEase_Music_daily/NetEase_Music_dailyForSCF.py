@@ -32,11 +32,10 @@ def md5(str):
 def protect(text):
     return {"params":encrypt('TA3YiYCfY2dDJQgg',encrypt('0CoJUm6Qyw8W8jud',text)),"encSecKey":"84ca47bca10bad09a6b04c5c927ef077d9b9f1e37098aa3eac6ea70eb59df0aa28b691b7e75e4f1f9831754919ea784c8f74fbfadf2898b0be17849fd656060162857830e241aba44991601f137624094c114ea8d17bce815b0cd4e5b8e2fbaba978c6d1d14dc3d1faf852bdd28818031ccdaaa13a6018e1024e2aae98844210"}
 
-def main(*args):
+def run(*args):
     try:
         msg = ""
         s=requests.Session()
-        header={}
         url="https://music.163.com/weapi/login/cellphone"
         url2="https://music.163.com/weapi/point/dailyTask"
         url3="https://music.163.com/weapi/v1/discovery/recommend/resource"
@@ -143,6 +142,24 @@ def main(*args):
     except Exception as e:
         print('repr(e):', repr(e))
         msg += '运行出错,repr(e):'+repr(e)
+    return msg + "\n"
+
+def main(*args):
+    msg = ""
+    global netease_username, netease_password
+    ulist = netease_username.split("\n")
+    plist = netease_password.split("\n")
+    if len(ulist) == len(plist):
+        i = 0
+        while i < len(ulist):
+            msg += f"第 {i+1} 个账号开始执行任务\n"
+            netease_username = ulist[i]
+            netease_password = plist[i]
+            msg += main(netease_username, netease_password)
+            i += 1
+    else:
+        msg = "账号密码个数不相符"
+        print(msg)
     return msg
 
 

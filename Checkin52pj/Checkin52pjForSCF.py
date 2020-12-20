@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
  
 cookie = os.environ.get('cookie_52pj')
 
-def pjCheckin(*args):
+def main(*args):
     try:
         msg = ""
         SCKEY = os.environ.get('SCKEY')
@@ -39,8 +39,19 @@ def pjCheckin(*args):
         print(b)
         print("52pj出错")
         msg += "52pj出错"
+    return msg + "\n"
+
+def pjCheckin(*args):
+    msg = ""
+    global cookie
+    clist = cookie.split("\n")
+    i = 0
+    while i < len(clist):
+        msg += f"第 {i+1} 个账号开始执行任务\n"
+        cookie = clist[i]
+        msg += main(cookie)
+        i += 1
     return msg
-        
 
 if __name__ == "__main__":
     if cookie:

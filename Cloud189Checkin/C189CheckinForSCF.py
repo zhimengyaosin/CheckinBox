@@ -9,7 +9,7 @@ SCKEY = os.environ.get('SCKEY')
 #推送url
 scurl = f"https://sc.ftqq.com/{SCKEY}.send"
 
-def C189Checkin(*args):
+def main(username:str, password:str):
     try:
         msg = ""
         s = login(username, password)
@@ -91,7 +91,7 @@ def C189Checkin(*args):
                 }
             sc = requests.post(scurl, data=data)
         msg += "天翼云签到出错："+repr(e)
-    return msg
+    return msg + "\n"
 
 BI_RM = list("0123456789abcdefghijklmnopqrstuvwxyz")
 def int2char(a):
@@ -183,6 +183,24 @@ def login(username, password):
     redirect_url = r.json()['toUrl']
     r = s.get(redirect_url)
     return s
+
+def C189Checkin(*args):
+    msg = ""
+    global username, password
+    ulist = username.split("\n")
+    plist = password.split("\n")
+    if len(ulist) == len(plist):
+        i = 0
+        while i < len(ulist):
+            msg += f"第 {i+1} 个账号开始执行任务\n"
+            username = ulist[i]
+            password = plist[i]
+            msg += main(username, password)
+            i += 1
+    else:
+        msg = "账号密码个数不相符"
+        print(msg)
+    return msg
 
 if __name__ == "__main__":
     if username and password:
