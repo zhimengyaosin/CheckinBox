@@ -2,11 +2,7 @@
 ### 智友邦每日签到<br>
 ### 使用方法<br>
 Github Actions版本<br>
-1.点击项目右上角的Fork，Fork此项目<br>
-2.到自己Fork的项目点击Setting→Secrets→New secrets<br>
-3.Name填写cookie_zhiyou，Value填写 获取到的cookie<br>
-4.在"Actions"中的"run"下点击"Run workflow"即可手动执行签到，后续运行按照schedule，默认在每天凌晨0:30自动签到，可自行修改<br>
-<br>
+自行探索<br>
 <br>
 [腾讯云函数SCF](https://console.cloud.tencent.com/scf/index)的版本<br>
 1.下载requirements.zip所需库，到[层](https://console.cloud.tencent.com/scf/layer)里面新建一个层<br>

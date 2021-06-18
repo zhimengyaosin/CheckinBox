@@ -4,13 +4,7 @@
 PS:目前因为ip容易被风控，所以签到失败的几率有点大，如有需要自行修改运行触发时间。
 ### 使用方法<br>
 Github Actions版本<br>
-PS.概率403访问出错，改多几个时间段，总有不是403的(SCF的是大概率403<br>
-1.点击项目右上角的Fork，Fork此项目<br>
-2.到自己Fork的项目点击Setting→Secrets→New secrets<br>
-3.Name填写cookie_52pj，Value填写 获取到的cookie<br>
-4.如果需要自动免费评分的话,新增一个Name填写rate_52pj，Value 随便填什么东西都行(非0都行)<br>
-PS.注意Github Actions运行日志会自动屏蔽Secrets内的内容，比如你Value填了1，后面日志的1都会被换成***<br>
-5.在"Actions"中的"run"下点击"Run workflow"即可手动执行签到，后续运行按照schedule，默认在每天凌晨0:30自动签到，可自行修改<br>
+自行探索<br>
 <br>
 <br>
 [腾讯云函数SCF](https://console.cloud.tencent.com/scf/index)的版本<br>
